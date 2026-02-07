@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React from "react"
 // @ts-ignore
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 // @ts-ignore
