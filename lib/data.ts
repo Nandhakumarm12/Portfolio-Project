@@ -1,5 +1,88 @@
 import { Project, BlogPost, Experience, Skill } from '@/types';
 
+export const researchProfile = {
+  googleScholar: "https://scholar.google.com/citations?user=lG_9PVEAAAAJ&hl=en",
+  orcid: "https://orcid.org/0000-0002-2097-2400",
+  orcidId: "0000-0002-2097-2400",
+  researchInterests: [
+    "AI in Cybersecurity",
+    "Agentic AI Systems",
+    "Malware Detection & Analysis",
+    "Robotic Vision & Haptics",
+    "Large Language Models",
+    "Threat Intelligence"
+  ],
+  stats: {
+    citations: "12+",
+    publications: "4+",
+    hIndex: "2"
+  }
+};
+
+export const currentlyLearning = [
+  {
+    topic: "Agentic AI & Multi-Agent Systems",
+    description: "Deep diving into LangGraph, AutoGen, and CrewAI for building autonomous agent pipelines",
+    icon: "🤖",
+    progress: 75,
+    resources: ["LangGraph Docs", "AutoGen Paper", "CrewAI GitHub"]
+  },
+  {
+    topic: "Advanced Penetration Testing",
+    description: "Studying for OSCP — buffer overflows, Active Directory attacks, custom exploit dev",
+    icon: "🔐",
+    progress: 50,
+    resources: ["OffSec PWK", "HackTheBox", "TryHackMe"]
+  },
+  {
+    topic: "Rust for Systems Programming",
+    description: "Learning Rust to write safer low-level tools and memory-safe security utilities",
+    icon: "🦀",
+    progress: 30,
+    resources: ["The Rust Book", "Rustlings", "Rustfinity"]
+  },
+  {
+    topic: "Formal Verification & Secure System Design",
+    description: "Exploring TLA+ and formal methods for provably correct security system specifications",
+    icon: "🔬",
+    progress: 20,
+    resources: ["TLA+ Video Course", "Alloy Analyzer", "Leslie Lamport Papers"]
+  }
+];
+
+export const liveProjects = [
+  {
+    id: "live-1",
+    title: "This Portfolio",
+    description: "AI-powered portfolio with a built-in chat assistant that knows everything about me. Ask it anything.",
+    status: "live",
+    statusColor: "emerald",
+    tech: ["Next.js", "OpenAI", "Framer Motion", "Tailwind"],
+    url: "https://nandhakumar.dev",
+    github: "https://github.com/nandhakumar/portfolio-project",
+    highlight: "Features a real-time AI chat assistant"
+  },
+  {
+    id: "live-2",
+    title: "Telerobotic Avatar Platform",
+    description: "Haptic feedback robotic system for healthcare — building the vision module using Pose CNN and real-time object tracking.",
+    status: "in progress",
+    statusColor: "amber",
+    tech: ["Python", "Pose CNN", "OpenCV", "ROS"],
+    highlight: "Research project @ Nottingham Trent University"
+  },
+  {
+    id: "live-3",
+    title: "AI Malware Sandbox",
+    description: "Evolving the malware detection research into a deployable sandbox with an API for integration into SOC pipelines.",
+    status: "building",
+    statusColor: "blue",
+    tech: ["FastAPI", "XGBoost", "LLM", "Docker"],
+    github: "https://github.com/nandhakumar/malware-detection-ai",
+    highlight: "93% accuracy achieved in research phase"
+  }
+];
+
 export const personalInfo = {
   name: "Nandhakumar Manikandasamy",
   title: "AI Engineer & Software Developer",
@@ -8,6 +91,8 @@ export const personalInfo = {
   phone: "+447553688243",
   github: "https://github.com/nandhakumar",
   linkedin: "https://linkedin.com/in/nandhakumarm",
+  scholar: "https://scholar.google.com/citations?user=lG_9PVEAAAAJ&hl=en",
+  orcid: "https://orcid.org/0000-0002-2097-2400",
   website: "https://nandhakumar.dev",
   resume: "/resume.pdf",
   bio: "Master's student in Cybersecurity at Nottingham Trent University with expertise in AI/ML, software engineering, and cybersecurity. Former SDE-II at AppViewX with experience in building enterprise-scale security platforms and AI-driven solutions.",
