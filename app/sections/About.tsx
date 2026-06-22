@@ -1,98 +1,100 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { personalInfo, education } from "@/lib/data"
-import { GraduationCap, Award, MapPin, Calendar } from "lucide-react"
+import { GraduationCap, Award } from "lucide-react"
 
 export default function About() {
   return (
-    <section id="about" className="py-20 bg-muted/50">
-      <div className="container mx-auto px-4">
+    <section id="about" className="py-32 relative overflow-hidden">
+      <div className="absolute top-0 right-0 section-num select-none">01</div>
+
+      <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6 }}
+          className="mb-20"
         >
-          <Badge variant="outline" className="mb-4">About Me</Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Background & Education</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Combining engineering fundamentals with cutting-edge AI and cybersecurity expertise
-          </p>
+          <p className="font-mono text-primary text-xs uppercase tracking-widest mb-3">About</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold leading-tight">
+            Background &{" "}
+            <span className="text-muted-foreground font-normal italic">Education</span>
+          </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-16 items-start">
+          {/* Story */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.7 }}
           >
-            <Card className="h-full">
-              <CardContent className="p-6">
-                <h3 className="text-2xl font-bold mb-4">My Story</h3>
-                <div className="prose dark:prose-invert max-w-none">
-                  {personalInfo.about.split('\n\n').map((paragraph, idx) => (
-                    <p key={idx} className="text-muted-foreground mb-4 leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
+            <blockquote className="font-display text-xl md:text-2xl font-medium leading-relaxed text-foreground/90 mb-8 border-l-2 border-primary pl-6">
+              "I build AI systems that understand threats before they become incidents."
+            </blockquote>
+
+            {personalInfo.about.split('\n\n').map((para, i) => (
+              <p key={i} className="text-muted-foreground leading-relaxed mb-5 text-[15px]">
+                {para}
+              </p>
+            ))}
+
+            <div className="grid grid-cols-2 gap-3 mt-10">
+              {[
+                { label: "Location", value: personalInfo.location },
+                { label: "Email", value: personalInfo.email },
+                { label: "Status", value: "Open to work" },
+                { label: "Focus", value: "AI · Security · Research" },
+              ].map((item) => (
+                <div key={item.label} className="rounded-xl border border-border/60 bg-card/40 p-4">
+                  <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-1">{item.label}</p>
+                  <p className="text-sm font-medium text-foreground/90 truncate">{item.value}</p>
                 </div>
-              </CardContent>
-            </Card>
+              ))}
+            </div>
           </motion.div>
 
+          {/* Education */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
             className="space-y-4"
           >
-            <h3 className="text-2xl font-bold mb-4">Education</h3>
-            {education.map((edu, idx) => (
-              <Card key={idx} className="overflow-hidden">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-full bg-primary/10">
-                      <GraduationCap className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-lg">{edu.degree}</h4>
-                      <p className="text-primary font-medium">{edu.school}</p>
-                      <div className="flex flex-wrap gap-4 mt-2 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
-                          {edu.period}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-4 w-4" />
-                          {edu.location}
-                        </span>
-                      </div>
-                      {edu.achievements.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {edu.achievements.map((achievement, i) => (
-                            <Badge key={i} variant="secondary" className="flex items-center gap-1">
-                              <Award className="h-3 w-3" />
-                              {achievement}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-                      <div className="mt-3">
-                        <p className="text-sm text-muted-foreground">
-                          <span className="font-medium">Key Courses:</span>{" "}
-                          {edu.courses.join(", ")}
-                        </p>
-                      </div>
-                    </div>
+            <p className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-6">Education</p>
+
+            {education.map((edu, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-border/60 bg-card/60 p-6 hover:border-primary/30 transition-colors"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="p-2.5 rounded-xl bg-primary/10 shrink-0 mt-0.5">
+                    <GraduationCap className="h-5 w-5 text-primary" />
                   </div>
-                </CardContent>
-              </Card>
+                  <div>
+                    <h3 className="font-display font-bold text-base leading-snug mb-1">{edu.degree}</h3>
+                    <p className="text-primary text-sm font-medium mb-1">{edu.school}</p>
+                    <p className="text-xs text-muted-foreground mb-3">{edu.period} · {edu.location}</p>
+                    {edu.achievements.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        {edu.achievements.map((a) => (
+                          <span key={a} className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary">
+                            <Award className="h-3 w-3" /> {a}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      <span className="text-foreground/60">Courses:</span> {edu.courses.join(", ")}
+                    </p>
+                  </div>
+                </div>
+              </div>
             ))}
           </motion.div>
         </div>

@@ -2,11 +2,8 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { blogPosts } from "@/lib/data"
-import { Calendar, Clock, ArrowRight, PenLine } from "lucide-react"
+import { Calendar, Clock, ArrowRight, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 
 const allTags = Array.from(new Set(blogPosts.flatMap((p) => p.tags)))
@@ -14,47 +11,42 @@ const allTags = Array.from(new Set(blogPosts.flatMap((p) => p.tags)))
 export default function BlogSection() {
   const [activeTag, setActiveTag] = useState<string | null>(null)
 
-  const filtered = activeTag
-    ? blogPosts.filter((p) => p.tags.includes(activeTag))
-    : blogPosts
-
-  const featured = filtered.find((p) => p.featured)
-  const rest = filtered.filter((p) => !p.featured).slice(0, 4)
+  const filtered = activeTag ? blogPosts.filter((p) => p.tags.includes(activeTag)) : blogPosts
+  const [hero, ...rest] = filtered
 
   return (
-    <section id="blog" className="py-20">
-      <div className="container mx-auto px-4">
+    <section id="blog" className="py-32 relative overflow-hidden bg-card/20">
+      <div className="absolute top-0 right-0 section-num select-none">08</div>
+
+      <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
         >
-          <Badge variant="outline" className="mb-4 border-teal-500/40 text-teal-600 dark:text-teal-400 gap-1">
-            <PenLine className="h-3 w-3" />
-            Writing
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">From the Blog</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Thoughts on AI, cybersecurity, engineering, and the journey — written periodically as I learn and build
-          </p>
+          <div>
+            <p className="font-mono text-primary text-xs uppercase tracking-widest mb-3">Writing</p>
+            <h2 className="font-display text-4xl md:text-5xl font-bold">
+              From the{" "}
+              <span className="text-muted-foreground font-normal italic">Blog</span>
+            </h2>
+          </div>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors font-medium shrink-0"
+          >
+            All articles <ArrowUpRight className="h-4 w-4" />
+          </Link>
         </motion.div>
 
-        {/* Category Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="flex flex-wrap justify-center gap-2 mb-10"
-        >
+        {/* Tag filter */}
+        <div className="flex flex-wrap gap-2 mb-10">
           <button
             onClick={() => setActiveTag(null)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all border ${
-              activeTag === null
-                ? "bg-primary text-primary-foreground border-primary"
-                : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+            className={`px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-widest transition-all border ${
+              !activeTag ? "bg-primary text-primary-foreground border-primary" : "border-border/60 text-muted-foreground hover:border-primary/40"
             }`}
           >
             All
@@ -63,16 +55,14 @@ export default function BlogSection() {
             <button
               key={tag}
               onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all border ${
-                activeTag === tag
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+              className={`px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-widest transition-all border ${
+                activeTag === tag ? "bg-primary text-primary-foreground border-primary" : "border-border/60 text-muted-foreground hover:border-primary/40"
               }`}
             >
               {tag}
             </button>
           ))}
-        </motion.div>
+        </div>
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -81,135 +71,116 @@ export default function BlogSection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="max-w-6xl mx-auto"
           >
-            {/* Featured Post — big card */}
-            {featured && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mb-8"
-              >
-                <Card className="overflow-hidden gradient-border card-hover">
-                  <CardContent className="p-0">
-                    <div className="md:flex">
-                      {/* Color slab */}
-                      <div className="md:w-2 bg-gradient-to-b from-teal-400 to-cyan-500 hidden md:block" />
-                      <div className="p-8 flex-1">
-                        <div className="flex items-center gap-3 mb-4">
-                          <Badge className="bg-teal-500/15 text-teal-600 dark:text-teal-400 border-teal-500/30">
-                            Featured Post
-                          </Badge>
-                          <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Calendar className="h-3.5 w-3.5" />
-                            {new Date(featured.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
-                          </span>
-                          <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Clock className="h-3.5 w-3.5" />
-                            {featured.readingTime}
-                          </span>
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-bold mb-3 hover:text-primary transition-colors">
-                          <Link href={`/blog/${featured.slug}`}>{featured.title}</Link>
-                        </h3>
-                        <p className="text-muted-foreground mb-6 max-w-2xl">{featured.excerpt}</p>
-                        <div className="flex flex-wrap items-center gap-3">
-                          <div className="flex flex-wrap gap-2">
-                            {featured.tags.slice(0, 4).map((tag) => (
-                              <Badge key={tag} variant="secondary" className="text-xs">
-                                {tag}
-                              </Badge>
-                            ))}
-                          </div>
-                          <Button variant="ghost" size="sm" asChild className="ml-auto text-primary hover:text-primary">
-                            <Link href={`/blog/${featured.slug}`} className="flex items-center gap-1">
-                              Read Article
-                              <ArrowRight className="h-4 w-4" />
-                            </Link>
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )}
-
-            {/* Other Posts */}
-            {rest.length > 0 && (
-              <div className="grid md:grid-cols-2 gap-6">
-                {rest.map((post, idx) => (
+            {filtered.length === 0 ? (
+              <p className="text-center text-muted-foreground py-20">No posts with that tag yet.</p>
+            ) : (
+              <div className="grid md:grid-cols-3 gap-5">
+                {/* Hero post – spans 2 cols */}
+                {hero && (
                   <motion.div
-                    key={post.slug}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: idx * 0.08 }}
+                    className="md:col-span-2 rounded-2xl border border-border/60 bg-card/60 p-8 hover:border-primary/30 transition-colors group flex flex-col"
                   >
-                    <Card className="h-full flex flex-col gradient-border card-hover">
-                      <CardContent className="p-6 flex flex-col h-full">
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-3.5 w-3.5" />
-                            {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-3.5 w-3.5" />
-                            {post.readingTime}
-                          </span>
-                        </div>
-                        <h3 className="text-lg font-bold mb-2 hover:text-primary transition-colors line-clamp-2">
-                          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                        </h3>
-                        <p className="text-sm text-muted-foreground line-clamp-2 mb-4 flex-1">{post.excerpt}</p>
-                        <div className="flex flex-wrap gap-1.5 mb-4">
-                          {post.tags.slice(0, 3).map((tag) => (
-                            <Badge key={tag} variant="secondary" className="text-xs">
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                        <Button variant="ghost" size="sm" asChild className="p-0 h-auto justify-start text-primary">
-                          <Link href={`/blog/${post.slug}`} className="flex items-center gap-1">
-                            Read More <ArrowRight className="h-3.5 w-3.5" />
-                          </Link>
-                        </Button>
-                      </CardContent>
-                    </Card>
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground font-mono mb-5">
+                      {hero.featured && (
+                        <span className="text-primary uppercase tracking-widest">Featured</span>
+                      )}
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(hero.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {hero.readingTime}
+                      </span>
+                    </div>
+                    <h3 className="font-display text-2xl font-bold mb-3 group-hover:text-primary transition-colors leading-tight">
+                      <Link href={`/blog/${hero.slug}`}>{hero.title}</Link>
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">{hero.excerpt}</p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap gap-1.5">
+                        {hero.tags.slice(0, 3).map((t) => (
+                          <span key={t} className="text-xs px-2.5 py-1 rounded-full border border-border/60 bg-muted/20 text-muted-foreground">{t}</span>
+                        ))}
+                      </div>
+                      <Link href={`/blog/${hero.slug}`} className="flex items-center gap-1.5 text-sm text-primary hover:gap-2.5 transition-all font-medium">
+                        Read <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Side posts */}
+                <div className="flex flex-col gap-5">
+                  {rest.slice(0, 2).map((post, i) => (
+                    <motion.div
+                      key={post.slug}
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + i * 0.08 }}
+                      className="flex-1 rounded-2xl border border-border/60 bg-card/60 p-5 hover:border-primary/30 transition-colors group flex flex-col"
+                    >
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground font-mono mb-3">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-3 w-3" />
+                          {new Date(post.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                        </span>
+                        <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{post.readingTime}</span>
+                      </div>
+                      <h3 className="font-semibold text-sm mb-2 group-hover:text-primary transition-colors line-clamp-2 leading-snug flex-1">
+                        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                      </h3>
+                      <Link href={`/blog/${post.slug}`} className="flex items-center gap-1 text-xs text-primary hover:gap-2 transition-all mt-3">
+                        Read <ArrowRight className="h-3.5 w-3.5" />
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Remaining posts */}
+                {rest.slice(2).map((post, i) => (
+                  <motion.div
+                    key={post.slug}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 + i * 0.08 }}
+                    className="rounded-2xl border border-border/60 bg-card/40 p-5 hover:border-primary/30 transition-colors group"
+                  >
+                    <p className="text-xs font-mono text-muted-foreground mb-2">
+                      {new Date(post.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })} · {post.readingTime}
+                    </p>
+                    <h3 className="font-semibold text-sm group-hover:text-primary transition-colors line-clamp-2 mb-2">{post.title}</h3>
+                    <Link href={`/blog/${post.slug}`} className="text-xs text-primary flex items-center gap-1">
+                      Read <ArrowRight className="h-3 w-3" />
+                    </Link>
                   </motion.div>
                 ))}
-              </div>
-            )}
-
-            {filtered.length === 0 && (
-              <div className="text-center py-20 text-muted-foreground">
-                No posts with that tag yet.
               </div>
             )}
           </motion.div>
         </AnimatePresence>
 
-        {/* Newsletter CTA */}
+        {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-12 max-w-6xl mx-auto"
+          className="mt-12 rounded-2xl border border-border/60 bg-card/40 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
         >
-          <Card className="bg-gradient-to-r from-teal-500/10 via-emerald-500/8 to-cyan-500/10 border-teal-500/20">
-            <CardContent className="p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div>
-                <h3 className="text-xl font-bold mb-1">I write when I learn something worth sharing</h3>
-                <p className="text-muted-foreground text-sm">Follow me on LinkedIn to get notified when new articles drop.</p>
-              </div>
-              <div className="flex gap-3 shrink-0">
-                <Button asChild size="lg" className="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white border-0">
-                  <Link href="/blog">All Articles</Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <p className="text-muted-foreground text-sm">
+            I write when I learn something worth sharing — follow on{" "}
+            <a href={`https://linkedin.com/in/nandhakumarm`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">LinkedIn</a>{" "}
+            for updates.
+          </p>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border/60 text-sm font-semibold text-muted-foreground hover:border-primary/40 hover:text-primary transition-all shrink-0"
+          >
+            All Articles <ArrowUpRight className="h-4 w-4" />
+          </Link>
         </motion.div>
       </div>
     </section>

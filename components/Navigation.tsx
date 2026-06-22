@@ -2,136 +2,105 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Menu, X, Moon, Sun } from "lucide-react"
+import { Moon, Sun, Menu, X } from "lucide-react"
 // @ts-ignore
 import { useTheme } from "next-themes"
 import Link from "next/link"
 
 const navItems = [
-  { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Experience", href: "#experience" },
   { name: "Research", href: "#research" },
   { name: "Projects", href: "#projects" },
-  { name: "Building", href: "#currently-building" },
   { name: "Lab", href: "#curiosity-lab" },
   { name: "Blog", href: "#blog" },
   { name: "Contact", href: "#contact" },
 ]
 
 export default function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
   const { theme, setTheme } = useTheme()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   return (
     <>
       <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled
-          ? "bg-background/80 backdrop-blur-lg border-b shadow-sm"
-          : "bg-transparent"
-          }`}
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 inset-x-0 z-50 flex justify-center pt-5 px-4"
       >
-        <div className="container mx-auto px-4">
-          <nav className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link href="/" className="font-bold text-xl">
-              <span className="text-gradient">NM</span>
-            </Link>
+        <div className={`flex items-center gap-1 px-4 py-2.5 rounded-full border transition-all duration-300 ${
+          scrolled
+            ? "bg-card/90 backdrop-blur-xl border-border/80 shadow-xl shadow-black/30"
+            : "bg-card/40 backdrop-blur-md border-border/30"
+        }`}>
+          {/* Logo */}
+          <Link href="/" className="font-display font-bold text-sm text-primary mr-3 tracking-tight">
+            NM
+          </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1">
-              {navItems.map((item) => (
-                <Button
-                  key={item.name}
-                  variant="ghost"
-                  size="sm"
-                  asChild
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  <a href={item.href}>{item.name}</a>
-                </Button>
-              ))}
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="ml-2"
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-0.5">
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-full hover:bg-white/5 transition-all"
               >
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="flex items-center gap-2 md:hidden">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              >
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              >
-                {isMobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </Button>
-            </div>
+                {item.name}
+              </a>
+            ))}
           </nav>
+
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="ml-3 p-1.5 rounded-full hover:bg-white/8 text-muted-foreground hover:text-foreground transition-all"
+            aria-label="Toggle theme"
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 dark:-rotate-90 dark:scale-0 transition-all" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 dark:rotate-0 dark:scale-100 transition-all" />
+          </button>
+
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden ml-1 p-1.5 rounded-full hover:bg-white/8 text-muted-foreground transition-all"
+          >
+            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {open && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-30 bg-background pt-20 md:hidden"
+            exit={{ opacity: 0, y: -10 }}
+            className="fixed inset-x-4 top-20 z-40 md:hidden rounded-2xl border border-border/80 bg-card/95 backdrop-blur-xl shadow-2xl overflow-hidden"
           >
-            <nav className="container mx-auto px-4 py-8">
-              <div className="flex flex-col gap-4">
-                {navItems.map((item, idx) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                  >
-                    <Button
-                      variant="ghost"
-                      size="lg"
-                      asChild
-                      className="w-full justify-start text-lg"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <a href={item.href}>{item.name}</a>
-                    </Button>
-                  </motion.div>
-                ))}
-              </div>
+            <nav className="flex flex-col p-3 gap-1">
+              {navItems.map((item, i) => (
+                <motion.a
+                  key={item.name}
+                  href={item.href}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  onClick={() => setOpen(false)}
+                  className="px-4 py-2.5 text-sm rounded-xl hover:bg-white/5 text-muted-foreground hover:text-foreground transition-all"
+                >
+                  {item.name}
+                </motion.a>
+              ))}
             </nav>
           </motion.div>
         )}
