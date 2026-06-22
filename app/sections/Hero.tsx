@@ -14,7 +14,7 @@ export default function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
       {/* Ambient glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-teal-500/6 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-yellow-500/6 blur-[120px] pointer-events-none" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff04_1px,transparent_1px),linear-gradient(to_bottom,#ffffff04_1px,transparent_1px)] bg-[size:40px_40px]" />
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
@@ -23,7 +23,7 @@ export default function Hero() {
 
           {/* ── BIG NAME CARD ── */}
           <motion.div {...fade(0.1)} className="md:col-span-3 rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-8 md:p-10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-500/5 rounded-full blur-3xl" />
             <div className="relative z-10">
               <p className="font-mono text-primary text-sm mb-4 tracking-widest uppercase">
                 — Portfolio 2025
@@ -65,10 +65,10 @@ export default function Hero() {
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-teal-400" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-400" />
                 </span>
-                <span className="text-xs font-mono text-teal-400 uppercase tracking-widest">Available</span>
+                <span className="text-xs font-mono text-yellow-400 uppercase tracking-widest">Available</span>
               </div>
               <p className="text-sm text-muted-foreground">Open for opportunities in AI, security & software engineering</p>
             </div>

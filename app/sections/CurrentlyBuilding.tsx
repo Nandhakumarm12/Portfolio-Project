@@ -5,9 +5,9 @@ import { liveProjects } from "@/lib/data"
 import { ExternalLink, Github } from "lucide-react"
 
 const statusConfig: Record<string, { dot: string; label: string; bg: string }> = {
-  live: { dot: "bg-teal-400", label: "Live", bg: "bg-teal-400/10 text-teal-400 border-teal-400/25" },
+  live: { dot: "bg-yellow-400", label: "Live", bg: "bg-yellow-400/10 text-yellow-400 border-yellow-400/25" },
   "in progress": { dot: "bg-amber-400", label: "In Progress", bg: "bg-amber-400/10 text-amber-400 border-amber-400/25" },
-  building: { dot: "bg-sky-400", label: "Building", bg: "bg-sky-400/10 text-sky-400 border-sky-400/25" },
+  building: { dot: "bg-orange-400", label: "Building", bg: "bg-orange-400/10 text-orange-400 border-orange-400/25" },
 }
 
 export default function CurrentlyBuilding() {

@@ -10,19 +10,19 @@
     --card-foreground: 0 0% 93%;
     --popover: 240 5% 7%;
     --popover-foreground: 0 0% 96%;
-    --primary: 175 72% 50%;
+    --primary: 43 96% 56%;
     --primary-foreground: 240 6% 4%;
     --secondary: 240 4% 12%;
     --secondary-foreground: 0 0% 70%;
     --muted: 240 4% 12%;
     --muted-foreground: 240 4% 50%;
-    --accent: 175 72% 50%;
+    --accent: 43 96% 56%;
     --accent-foreground: 240 6% 4%;
     --destructive: 0 63% 50%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 4% 13%;
     --input: 240 4% 13%;
-    --ring: 175 72% 50%;
+    --ring: 43 96% 56%;
     --radius: 0.75rem;
   }
 
@@ -31,7 +31,7 @@
     --foreground: 240 6% 8%;
     --card: 0 0% 100%;
     --card-foreground: 240 6% 8%;
-    --primary: 175 72% 38%;
+    --primary: 43 96% 56%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 4% 95%;
     --secondary-foreground: 240 6% 20%;
@@ -39,7 +39,7 @@
     --muted-foreground: 240 4% 48%;
     --border: 240 4% 88%;
     --input: 240 4% 88%;
-    --ring: 175 72% 38%;
+    --ring: 43 96% 56%;
   }
 }
 
@@ -53,7 +53,7 @@
   .font-display { font-family: var(--font-display), var(--font-inter), system-ui, sans-serif; }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-emerald-300;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-amber-300;
   }
 
   .teal-glow {

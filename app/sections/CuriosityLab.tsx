@@ -53,7 +53,7 @@ export default function CuriosityLab() {
                     whileInView={{ width: `${item.progress}%` }}
                     viewport={{ once: true }}
                     transition={{ duration: 1.2, delay: i * 0.15, ease: "easeOut" }}
-                    className="h-full bg-gradient-to-r from-teal-500 to-emerald-400 rounded-full"
+                    className="h-full bg-gradient-to-r from-yellow-500 to-amber-400 rounded-full"
                   />
                 </div>
               </div>

@@ -30,7 +30,7 @@ export default function Contact() {
 
           <a
             href={`mailto:${personalInfo.email}`}
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground font-bold text-lg hover:bg-primary/90 transition-all hover:scale-105 shadow-2xl shadow-teal-500/20 mb-16"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground font-bold text-lg hover:bg-primary/90 transition-all hover:scale-105 shadow-2xl shadow-yellow-500/20 mb-16"
           >
             {personalInfo.email}
             <ArrowUpRight className="h-5 w-5" />
